@@ -1,9 +1,9 @@
 .homePageWrapper {
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  height: 100vh;
 }
  
 .formWrapper{
@@ -49,16 +49,19 @@
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  font-weight: bold;
 }
 
-.joinBtn{
+.joinBtn ,
+.leaveBtn{
   background: rgb(155, 10, 239);
   width: 100px;
   margin-left: auto;
   
 }
 
-.joinBtn:hover{
+.joinBtn:hover,
+.leaveBtn:hover {
   background: rgb(123, 6, 190);
 }
 
@@ -88,3 +91,64 @@ footer{
 /* footer a {
   color: beige;
 } */
+
+.mainWrap {
+  display:grid;
+  grid-template-columns: 230px 1fr;
+}
+
+.aside{
+  background: rgb(29, 33, 43);
+  padding: 16px;
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+}
+
+.asideInner{
+  flex:1;
+}
+
+.clientsList{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap:20 px;
+}
+
+.client{
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+
+}
+
+.userName{
+  margin-top: 10px;
+
+}
+
+.logo{
+  border-bottom: 1px solid rgb(66, 66, 66);
+  padding-bottom: 10px;
+
+}
+
+.logoImage{
+  height: 60px;
+}
+
+.leaveBtn{
+
+  margin-top: 20px;
+  width: 100%;
+}
+
+.Codemirror {
+  min-height: calc(100vh - 20px);
+  font-size: 20px;
+  line-height: 1.5;
+  padding-top: 20px; 
+}
+
