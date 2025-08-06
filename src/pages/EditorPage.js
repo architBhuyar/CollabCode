@@ -13,6 +13,8 @@ const EditorPage = () => {
   
   const reactNavigator = useNavigate();
 
+  const [clients, setClients] = useState([]); 
+
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
@@ -31,14 +33,37 @@ const EditorPage = () => {
 
       });
 
+      // Listening for joined event
+      socketRef.current.on(ACTIONS.JOINED,({clients,userName,socketId}
+      ) =>{
+        if(userName !== location.state?.userName){
+          toast.success(`${userName} joined the room !!!`);
+        }
+        setClients(clients);
+      });
+
+      //Listening for disconnected
+      socketRef.current.on(ACTIONS.DISCONNECTED,({userName,socketId})=>{
+          toast.success(`${userName} left the room !!!`);
+          setClients((prev)=>{
+            return prev.filter((client) =>     
+               client.socketId !== socketId
+            );
+          });
+      });
     };
     init();
+    return () => {
+      socketRef.current.disconnect();
+      socketRef.current.off(ACTIONS.JOINED);
+      socketRef.current.off(ACTIONS.DISCONNECTED);
+    }
   }, []);
 
-  const [clients, setClients] = useState([{ socketId: 1, userName: 'Arb' }, { socketId: 2, userName: 'ytr' }]);
+ 
 
   if (!location.state) {
-    return <Navigate />;
+    return <Navigate to='/' />;
 
   }
 

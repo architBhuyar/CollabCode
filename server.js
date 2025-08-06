@@ -24,6 +24,25 @@ io.on('connection',(socket)=>{
         userSocketMap[socket.id] = userName;
         socket.join(roomId);
         const clients = getAllConnectedClients(roomId);
+        clients.forEach(({socketId})=> {
+            io.to(socketId).emit(ACTIONS.JOINED,{
+                clients,
+                userName,
+                socketId: socket.id,
+            })
+        })
+    });
+    socket.on('disconnecting',() => {
+        const rooms = [...socket.rooms];
+        rooms.forEach((roomId) => {
+            socket.in(roomId).emit(ACTIONS.DISCONNECTED,{
+                socketId: socket.id,
+                userName: userSocketMap[socket.id],
+
+            });
+        });
+        delete userSocketMap[socket.id];
+        socket.leave();
     });
 });
 
